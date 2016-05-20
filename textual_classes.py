@@ -77,10 +77,13 @@ def psi(x, y, sm, sparm):
     """Returns the combined feature vector Psi(x,y)."""
     # Just increment the feature index to the appropriate stack position.
     yvec = get_tf_idf_vector(y)
+    delta_vec = []
+    for v in tf_idf_transformed_matrix:
+        delta_vec.append(cosine_similarity(v, yvec))
     xvec = [v for k,v in x]
-    pvec = svmapi.Sparse(np.outer(x,yvec).flatten())
+    pvec = svmapi.Sparse(np.outer(x,delta_vec).flatten())
     return pvec
 
 def loss(y, ybar, sparm):
     """Loss is 1 if the labels are different, 0 if they are the same."""
-    return 100.0*int(cosine_similarity(y, ybar))
+    return cosine_similarity(y, ybar)
