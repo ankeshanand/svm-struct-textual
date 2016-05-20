@@ -3,6 +3,8 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+tf_idf_transformed_matrix = []
+
 def read_examples(filename, sparm):
     """Parses an input file into an example sequence."""
     # This reads example files of the type read by SVM^multiclass.
@@ -26,6 +28,7 @@ def read_examples(filename, sparm):
         count += 1
     # Print out some very useful statistics.
     vectorizer = TfidfVectorizer(stop_words='english')
+    global tf_idf_transformed_matrix
     tf_idf_transformed_matrix = vectorizer.fit_transform(text)
     print len(examples),'examples read'
     return examples
